@@ -7,6 +7,7 @@
   const showToast = (t, bg = '#28a745') =>
     Toastify({ text: t, duration: 3000, style: { background: bg } }).showToast();
   const genId = arr => arr.length ? Math.max(...arr.map(o => o.id)) + 1 : 1;
+let lastSalaryAdded = 0; // Conservará el último monto agregado (no el total acumulado)
 
   // -----------------------------
   // Estado global
@@ -153,69 +154,67 @@ function calcAndRenderTotals() {
   document.getElementById('total-real').innerText = fmt.format(totalReal);
 }
 
+function renderPockets() {
+  const c = document.getElementById('pockets');
+  c.innerHTML = '';
 
-  
-  function renderPockets() {
-    const c = document.getElementById('pockets');
-    c.innerHTML = '';
-
-    // Sueldo tarjeta
-    const suDiv = document.createElement('div');
-    suDiv.className = 'col-12';
-    suDiv.innerHTML = `
-      <div class="card pocket-card">
-        <div class="card-body d-flex justify-content-between align-items-center">
+  // Sueldo tarjeta: mostrar sólo el último salario agregado
+  const suDiv = document.createElement('div');
+  suDiv.className = 'col-12';
+  suDiv.innerHTML = `
+    <div class="card pocket-card">
+      <div class="card-body d-flex justify-content-between align-items-center">
+        <div>
+          <div><strong>Sueldo Base:</strong> ${fmt.format(sueldoBase)}</div>
           <div>
-            <div><strong>Sueldo Base:</strong> ${fmt.format(sueldoBase)}</div>
-            <div>
-              <strong>Sueldo Actual:</strong> ${fmt.format(sueldoGanado)}
-              <button id="edit-sueldo" class="btn btn-sm btn-outline-primary ms-2">✎</button>
-              <button id="add-sueldo" class="btn btn-sm btn-outline-success ms-1">+ Agregar</button>
-            </div>
+            <strong>Sueldo Actual:</strong> ${fmt.format(lastSalaryAdded)}
+            <button id="edit-sueldo" class="btn btn-sm btn-outline-secondary ms-2">✎</button>
+            <button id="add-sueldo" class="btn btn-sm btn-outline-success ms-1">+ Agregar</button>
           </div>
         </div>
+      </div>
+    </div>`;
+  c.append(suDiv);
+
+  // Cada bolsillo
+  pockets.forEach(p => {
+    const col = document.createElement('div');
+    col.className = 'col-md-6 col-lg-3';
+    col.innerHTML = `
+      <div class="card pocket-card h-100">
+        <div class="card-body d-flex flex-column">
+          <div class="pocket-header">${p.name}</div>
+          ${p.id !== 6
+            ? `<div class="small">Sueldo Base: ${fmt.format(Math.round(p.pct * sueldoBase))}</div>
+               <div class="small">Última Contribución: ${fmt.format(Math.round(p.pct * lastSalaryAdded))}</div>`
+            : `<div class="small">Base fija: 10 000</div>`}
+          <div class="mt-2"><strong>Total acum.:</strong> ${fmt.format(p.total)}</div>
+          ${p.id !== 6
+            ? `<button class="btn btn-sm btn-primary add-desire mt-auto" data-id="${p.id}">+ Agregar deseo</button>`
+            : `<button class="btn btn-sm btn-primary add-regalo mt-auto">+10 000 Regalo</button>`}
+          <ul class="pocket-desires list-group mt-3"></ul>
+        </div>
       </div>`;
-    c.append(suDiv);
+    c.append(col);
 
-    // Cada bolsillo
-    pockets.forEach(p => {
-      const col = document.createElement('div');
-      col.className = 'col-md-6 col-lg-3';
-      col.innerHTML = `
-        <div class="card pocket-card h-100">
-          <div class="card-body d-flex flex-column">
-            <div class="pocket-header">${p.name}</div>
-            ${p.id!==6
-              ? `<div class="small">Sueldo Base: ${fmt.format(Math.round(p.pct * sueldoBase))}</div>
-                 <div class="small">Sueldo Actual: ${fmt.format(Math.round(p.pct * sueldoGanado))}</div>`
-              : `<div class="small">Base fija: 10 000</div>`}
-            <div class="mt-2"><strong>Total acum.:</strong> ${fmt.format(p.total)}</div>
-            ${p.id!==6
-              ? `<button class="btn btn-sm btn-primary add-desire mt-auto" data-id="${p.id}">+ Agregar deseo</button>`
-              : `<button class="btn btn-sm btn-warning add-regalo mt-auto">+10 000 Regalo</button>`}
-            <ul class="pocket-desires list-group mt-3"></ul>
-          </div>
+    // Render deseos (sin cambio)
+    const ul = col.querySelector('.pocket-desires');
+    p.desires.forEach((d, i) => {
+      const li = document.createElement('li');
+      li.className = 'list-group-item d-flex justify-content-between align-items-center';
+      li.innerHTML = `
+        <span>${d.motivo}: ${fmt.format(d.monto)}</span>
+        <div class="btn-group btn-group-sm">
+          <button class="btn btn-success desire-done" data-p="${p.id}" data-i="${i}">Hecho</button>
+          <button class="btn btn-secondary desire-edit" data-p="${p.id}" data-i="${i}">✎</button>
+          <button class="btn btn-secondary desire-pay"  data-p="${p.id}" data-i="${i}">Abonar</button>
+          <button class="btn btn-secondary desire-loan" data-p="${p.id}" data-i="${i}">Préstamo</button>
+          <button class="btn btn-danger desire-del"    data-p="${p.id}" data-i="${i}">Eliminar</button>
         </div>`;
-      c.append(col);
-
-      // Render deseos
-      const ul = col.querySelector('.pocket-desires');
-      p.desires.forEach((d, i) => {
-        const li = document.createElement('li');
-        li.className = 'list-group-item d-flex justify-content-between align-items-center';
-        li.innerHTML = `
-          <span>${d.motivo}: ${fmt.format(d.monto)}</span>
-          <div class="btn-group btn-group-sm">
-            <button class="btn btn-success desire-done" data-p="${p.id}" data-i="${i}">Hecho</button>
-            <button class="btn btn-secondary desire-edit" data-p="${p.id}" data-i="${i}">✎</button>
-            <button class="btn btn-info desire-pay"  data-p="${p.id}" data-i="${i}">Abonar</button>
-            <button class="btn btn-info desire-loan" data-p="${p.id}" data-i="${i}">Préstamo</button>
-            <button class="btn btn-danger desire-del"  data-p="${p.id}" data-i="${i}">Eliminar</button>
-          </div>`;
-        ul.append(li);
-      });
+      ul.append(li);
     });
-  }
+  });
+}
 
   // -----------------------------
   // Desglose de deudas en modal
@@ -396,49 +395,67 @@ if (e.target.matches('.edit-account')) {
     }
 
     // 6) Sueldo ganado
-    if (e.target.matches('#edit-sueldo')) {
-      const raw = prompt('Nuevo sueldo ganado:', sueldoGanado).replace(',', '.'),
-            v   = parseFloat(raw);
-      if (!isNaN(v)) {
-        // Revertir última contribución
-        pockets.forEach(p => {
-          p.total -= (lastContribution[p.id] || 0);
-          lastContribution[p.id] = 0;
-        });
-        sueldoGanado = v;
-        // Recalcular nueva contribución
-        pockets.forEach(p => {
-          if (p.id !== 6) {
-            const contrib = Math.round(p.pct * v);
-            p.total += contrib;
-            lastContribution[p.id] = contrib;
-          }
-        });
-        history.unshift({
-          date: new Date().toISOString().slice(0,10),
-          type: 'edicion',
-          detail: `Sueldo ganado editado a ${fmt.format(v)}`
-        });
-        return refreshAll();
-      }
-    }
-if (e.target.matches('#add-sueldo')) {
-  const raw = prompt('Monto a agregar:').replace(',', '.'),
+if (e.target.matches('#edit-sueldo')) {
+  const raw = prompt('Nuevo último sueldo (el que está en “Sueldo Actual”):', lastSalaryAdded).replace(',', '.'),
         v   = parseFloat(raw);
-  if (isNaN(v) || v <= 0) return showToast('Monto inválido','#c00');
+  if (isNaN(v) || v < 0) return showToast('Monto inválido', '#c00');
 
-  sueldoGanado += v; // 🔁 Sumar, no reemplazar
-
+  // 1) Restar las contribuciones previas de ese último salario de cada bolsillo:
+  const old = lastSalaryAdded;
   pockets.forEach(p => {
     if (p.id !== 6) {
-      const contrib = Math.round(p.pct * v); // Usa el valor agregado, no sueldo total
+      const oldContrib = Math.round(p.pct * old);
+      p.total -= oldContrib;
+    }
+  });
+
+  // 2) Ajustar sueldoGanado sumando la diferencia:
+  //    (restamos old y luego agregamos v)
+  sueldoGanado = sueldoGanado - old + v;
+
+  // 3) Guardar el nuevo último salario
+  lastSalaryAdded = v;
+
+  // 4) Repartir la contribución de v en cada bolsillo
+  pockets.forEach(p => {
+    if (p.id !== 6) {
+      const contrib = Math.round(p.pct * v);
       p.total += contrib;
-      lastContribution[p.id] = (lastContribution[p.id] || 0) + contrib;
     }
   });
 
   history.unshift({
-    date: new Date().toISOString().slice(0,10),
+    date: new Date().toISOString().slice(0, 10),
+    type: 'edicion',
+    detail: `Último sueldo modificado de ${fmt.format(old)} a ${fmt.format(v)}`
+  });
+
+  return refreshAll();
+}
+
+if (e.target.matches('#add-sueldo')) {
+  const raw = prompt('Monto a agregar:').replace(',', '.'),
+        v   = parseFloat(raw);
+  if (isNaN(v) || v <= 0) return showToast('Monto inválido', '#c00');
+
+  // 1) Guardamos el último monto agregado
+  lastSalaryAdded = v;
+
+  // 2) Acumulamos al sueldo ganado total
+  sueldoGanado += v;
+
+  // 3) Repartimos únicamente la contribución de este monto
+  pockets.forEach(p => {
+    if (p.id !== 6) {
+      const contrib = Math.round(p.pct * v);
+      p.total += contrib;
+      // Guardamos este contrib para usar en "Última Contribución"
+      // (ya está en lastSalaryAdded, no hay que acumular aquí)
+    }
+  });
+
+  history.unshift({
+    date: new Date().toISOString().slice(0, 10),
     type: 'suma',
     detail: `Sueldo ganado agregado ${fmt.format(v)}`
   });
