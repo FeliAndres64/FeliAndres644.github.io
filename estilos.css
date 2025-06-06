@@ -1,0 +1,563 @@
+/* =============================
+   VARIABLES CSS PARA TEMAS
+   ============================= */
+:root {
+  /* Colores globales */
+  --bs-body-bg: #f8f5f0;           /* Fondo claro (ligeramente beige) */
+  --bs-body-color: #3e2723;        /* Texto café oscuro */
+
+  --card-bg: #ffffff;              /* Fondo de cards en claro */
+  --card-border: #e0dcd7;          /* Borde suave */
+  --card-color: #3e2723;           /* Texto dentro de cards */
+
+  --primary-color: #d2691e;        /* Terracota principal para botones/íconos */
+  --secondary-color: #8d6e63;      /* Marrón medio para elementos secundarios */
+  --success-color: #2e7d32;        /* Verde para “Hecho” */
+  --info-color: #d2691e;           /* Terracota (usado en algunas acciones) */
+  --warning-color: #d99058;        /* Naranja suave para alertas secundarias */
+  --danger-color: #c62828;         /* Rojo intenso para eliminar */
+
+  --list-bg: #ffffff;              /* Fondo de listas en claro */
+  --list-border: #e0dcd7;          /* Borde de listas */
+
+  --btn-outline-color: var(--primary-color);
+
+  /* Cuenta “Físico” (efectivo) */
+  --acc1-bg: #6d4c41;              /* Marrón oscuro */
+  --acc1-text: #ffffff;            /* Texto blanco */
+
+  /* Cuenta “Nequi” (ligeramente adaptado) */
+  --acc2-bg: #1f0020;              /* Negruzco con matiz púrpura */
+  --acc2-text: #db0082;            /* Magenta secundario */
+  
+  /* Cuenta “Lulo” */
+  --acc3-bg: #1f2639;              /* Azul oscuro casi negro */
+  --acc3-text: #e5ff00;            /* Amarillo neón secundario */
+
+  /* Cuenta “Bolsillo” */
+  --acc4-bg: #cbaa5d;              /* Amarillo mostaza suave */
+  --acc4-text: #3e2723;            /* Café oscuro */
+  
+  /* Scrollbar */
+  --scrollbar-thumb: #8d6e63;      /* Marrón medio */
+  --scrollbar-track: #f8f5f0;
+}
+
+[data-theme='dark'] {
+  /* Fondo y texto global */
+  --bs-body-bg: #2b2723;           /* Café muy oscuro */
+  --bs-body-color: #d7ccc8;        /* Beige suave */
+
+  --card-bg: #3e332d;              /* Card café oscuro */
+  --card-border: #4e3f36;          /* Borde café medio */
+  --card-color: #d7ccc8;           /* Texto beige dentro de cards */
+
+  /* Mantener primary/terracota igual para contraste */
+  --primary-color: #d2691e;
+  --secondary-color: #b08b72;      /* Marrón suave para oscuro */
+  --success-color: #2e7d32;
+  --info-color: #d2691e;
+  --warning-color: #d99058;
+  --danger-color: #c62828;
+
+  --list-bg: #3e332d;              /* Listas café oscuro */
+  --list-border: #4e3f36;
+
+  --btn-outline-color: var(--primary-color);
+
+  /* Cuenta “Físico” */
+  --acc1-bg: #5d4037;
+  --acc1-text: #ffffff;
+
+  /* Cuenta “Nequi” */
+  --acc2-bg: #381a38;              /* Morado muy oscuro */
+  --acc2-text: #f48fb1;            /* Rosa suave */
+
+  /* Cuenta “Lulo” */
+  --acc3-bg: #243044;              /* Azul fosco */
+  --acc3-text: #ffff8d;            /* Amarillo pastel */
+
+  /* Cuenta “Bolsillo” */
+  --acc4-bg: #d4b17a;
+  --acc4-text: #2b2723;
+
+  /* Scrollbar */
+  --scrollbar-thumb: #b08b72;
+  --scrollbar-track: #3e332d;
+}
+
+/* =============================
+   GLOBALES
+   ============================= */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: var(--bs-body-bg);
+  color: var(--bs-body-color);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+body {
+  background-color: var(--bs-body-bg) !important;
+  color: var(--bs-body-color) !important;
+}
+
+/* Forzar que Bootstrap use nuestras variables */
+.bg-light {
+  background-color: var(--card-bg) !important;
+}
+.text-muted {
+  color: var(--secondary-color) !important;
+}
+
+/* =============================
+   NAVBAR
+   ============================= */
+.navbar {
+  background-color: var(--card-bg) !important;
+  border-bottom: 1px solid var(--card-border);
+}
+.navbar-brand {
+  color: var(--primary-color) !important;
+  font-weight: bold;
+}
+.navbar-brand:hover {
+  color: var(--primary-color);
+}
+.navbar .btn-outline-secondary {
+  color: var(--btn-outline-color);
+  border-color: var(--btn-outline-color);
+}
+.navbar .btn-outline-secondary:hover {
+  background-color: var(--btn-outline-color);
+  color: var(--card-bg);
+}
+
+/* =============================
+   CARD GENERAL
+   ============================= */
+.card {
+  background-color: var(--card-bg) !important;
+  border: 1px solid var(--card-border) !important;
+  color: var(--card-color) !important;
+  border-radius: 0.5rem;
+}
+.card-header {
+  background-color: var(--card-bg) !important;
+  border-bottom: 1px solid var(--card-border) !important;
+}
+.card-footer {
+  background-color: var(--card-bg) !important;
+  border-top: 1px solid var(--card-border) !important;
+}
+h5,
+h4,
+h6 {
+  color: var(--bs-body-color) !important;
+}
+
+/* =============================
+   LIST GROUP
+   ============================= */
+.list-group {
+  background-color: var(--list-bg) !important;
+  border: 1px solid var(--list-border) !important;
+  border-radius: 0.5rem;
+}
+.list-group-item {
+  background-color: var(--list-bg) !important;
+  border-bottom: 1px solid var(--list-border) !important;
+  color: var(--bs-body-color) !important;
+}
+.list-group-item:last-child {
+  border-bottom: none;
+}
+
+/* =============================
+   BOTONES
+   ============================= */
+/* Botón primario terracota */
+.btn-primary {
+  background-color: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
+  color: #fff !important;
+}
+.btn-primary:hover {
+  background-color: #b45418 !important;
+  border-color: #b45418 !important;
+}
+
+/* Botón de “Hecho” (verde) */
+.btn-success {
+  background-color: var(--success-color) !important;
+  border-color: var(--success-color) !important;
+  color: #fff !important;
+}
+.btn-success:hover {
+  background-color: #276b2a !important;
+  border-color: #276b2a !important;
+}
+
+/* Botón “Eliminar” (rojo) */
+.btn-danger {
+  background-color: var(--danger-color) !important;
+  border-color: var(--danger-color) !important;
+  color: #fff !important;
+}
+.btn-danger:hover {
+  background-color: #a71f1f !important;
+  border-color: #a71f1f !important;
+}
+
+/* Botón “Ver Historial” / Info (usa terracota) */
+.btn-outline-info {
+  color: var(--info-color) !important;
+  border-color: var(--info-color) !important;
+}
+.btn-outline-info:hover {
+  background-color: var(--info-color) !important;
+  color: #fff !important;
+}
+
+/* Botón secundario (outline marrón suave) */
+.btn-outline-secondary {
+  color: var(--secondary-color) !important;
+  border-color: var(--secondary-color) !important;
+}
+.btn-outline-secondary:hover {
+  background-color: var(--secondary-color) !important;
+  color: #fff !important;
+}
+
+/* “+10 000 Regalo” igual que botones primarios */
+.add-regalo {
+  background-color: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
+  color: #fff !important;
+}
+.add-regalo:hover {
+  background-color: #b45418 !important;
+  border-color: #b45418 !important;
+}
+
+/* Botones “Abonar” y “Préstamo”: marrón medio */
+.desire-pay,
+.desire-loan {
+  background-color: var(--secondary-color) !important;
+  border-color: var(--secondary-color) !important;
+  color: #fff !important;
+}
+.desire-pay:hover,
+.desire-loan:hover {
+  background-color: #7d5c52 !important;
+  border-color: #7d5c52 !important;
+}
+
+/* Tamaño compacto para casi todos los botones */
+.btn-sm {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.85rem;
+  border-radius: 0.375rem;
+}
+
+/* =============================
+   FORM CONTROLS
+   ============================= */
+.form-control,
+.form-select {
+  background-color: var(--card-bg) !important;
+  color: var(--bs-body-color) !important;
+  border: 1px solid var(--card-border) !important;
+  border-radius: 0.375rem;
+}
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--primary-color) !important;
+  box-shadow: 0 0 0 0.2rem rgba(210, 105, 30, 0.25) !important;
+}
+input[type='date']::-webkit-calendar-picker-indicator {
+  filter: invert(0.6);
+}
+
+/* =============================
+   CUENTAS (account-card)
+   ============================= */
+.account-card .card-body {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+}
+
+/* 1) “Físico” */
+.acc-1 {
+  background-color: var(--acc1-bg) !important;
+  color: var(--acc1-text) !important;
+}
+.acc-1 .acc-emoji::before {
+  content: "💵 ";
+}
+
+/* 2) “Nequi” */
+.acc-2 {
+  background-color: var(--acc2-bg) !important;
+  color: var(--acc2-text) !important;
+}
+.acc-2 .acc-emoji::before {
+  content: "🟢 ";
+}
+
+/* 3) “Lulo” */
+.acc-3 {
+  background-color: var(--acc3-bg) !important;
+  color: var(--acc3-text) !important;
+}
+.acc-3 .acc-emoji::before {
+  content: "🍈 ";
+}
+
+/* 4) “Bolsillo” */
+.acc-4 {
+  background-color: var(--acc4-bg) !important;
+  color: var(--acc4-text) !important;
+}
+.acc-4 .acc-emoji::before {
+  content: "👜 ";
+}
+
+/* Texto y saldo */
+.account-card .balance {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+/* Botón de editar en cuenta */
+.account-card .edit-account {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: #fff;
+  font-size: 1rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.375rem;
+}
+.account-card .edit-account:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+/* =============================
+   SUB‐LIST (deudas/créditos)
+   ============================= */
+.sub-list {
+  margin: 0;
+  padding: 0;
+}
+.sub-list .list-group-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background-color: var(--list-bg) !important;
+  border: 1px solid var(--list-border) !important;
+  border-radius: 0.375rem;
+  margin: 0.25rem 1rem;
+}
+
+/* Botones dentro de sub-list */
+.sub-done {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  color: var(--success-color);
+}
+.sub-delete {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  color: var(--danger-color);
+}
+.sub-edit {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  color: var(--secondary-color);
+}
+
+/* =============================
+   TOTALES GENERALES (cards)
+   ============================= */
+.clickable {
+  cursor: pointer;
+}
+.clickable:hover {
+  text-decoration: underline;
+}
+
+/* =============================
+   BOLSILLOS (pocket-card)
+   ============================= */
+.pocket-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 0.5rem;
+  padding: 0; /* Reducido */
+}
+.pocket-card .card-body {
+  display: flex;
+  flex-direction: column;
+  padding: 0.75rem 1rem;
+}
+.pocket-header {
+  font-weight: bold;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+.pocket-card .small {
+  font-size: 0.875rem;
+  color: var(--secondary-color);
+  margin-bottom: 0.25rem;
+}
+/* Botón “+ Agregar deseo” */
+.add-desire {
+  background-color: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
+  color: #fff !important;
+  margin-top: 0.5rem;
+  border-radius: 0.375rem;
+  font-size: 0.9rem;
+}
+/* Botón “+10 000 Regalo” ya sobreescrito arriba */
+
+/* Lista de deseos: cada elemento ocupa full ancho y apila vertical */
+.pocket-desires {
+  list-style: none;
+  padding: 0;
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-height: 200px;
+  overflow-y: auto;
+}
+.pocket-desires li {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--list-bg) !important;
+  border: 1px solid var(--list-border) !important;
+  border-radius: 0.375rem;
+  padding: 0.5rem;
+}
+.pocket-desires li span {
+  font-size: 0.9rem;
+  color: var(--bs-body-color);
+  margin-bottom: 0.5rem;
+}
+
+/* Grupo de botones dentro de cada deseo */
+.pocket-desires .btn-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+.pocket-desires .btn-group .btn {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.4rem;
+  border-radius: 0.375rem;
+}
+
+/* =============================
+   HISTORIAL DE MOVIMIENTOS
+   ============================= */
+/* Fondo del modal heredado del card */
+#modalHistory .modal-content {
+  background-color: var(--card-bg) !important;
+  color: var(--card-color) !important;
+}
+/* List items: usar colores según tipo */
+#history-list .list-group-item {
+  background-color: var(--list-bg) !important;
+  border-bottom: 1px solid var(--list-border) !important;
+  color: var(--bs-body-color) !important;
+}
+/* Resta */
+#history-list .text-danger {
+  color: var(--danger-color) !important;
+}
+/* Suma */
+#history-list .text-success {
+  color: var(--success-color) !important;
+}
+/* Edición (asignamos clase .text-edicion en JS—ver nota abajo) */
+#history-list .text-edicion {
+  color: var(--secondary-color) !important;
+}
+
+/* =============================
+   MODAL BREAKDOWN
+   ============================= */
+#modalBreakdown .modal-content {
+  background-color: var(--card-bg) !important;
+  color: var(--card-color) !important;
+}
+#breakdown-table {
+  color: var(--bs-body-color) !important;
+  margin: 0;
+}
+#breakdown-table th {
+  background-color: var(--card-bg) !important;
+  color: var(--bs-body-color) !important;
+  border-bottom: 1px solid var(--list-border) !important;
+}
+#breakdown-table td {
+  background-color: var(--list-bg) !important;
+  border-bottom: 1px solid var(--list-border) !important;
+}
+
+/* =============================
+   SCROLLBARS PERSONALIZADAS
+   ============================= */
+ul::-webkit-scrollbar {
+  width: 6px;
+}
+ul::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+ul::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb);
+  border-radius: 3px;
+}
+
+/* =============================
+   AJUSTES RESPONSIVOS
+   ============================= */
+@media (max-width: 768px) {
+  .pocket-desires li {
+    width: 100%;
+  }
+}
+/* Botón “Exportar JSON” */
+#btn-export {
+  background-color: var(--secondary-color) !important;
+  border-color: var(--secondary-color) !important;
+  color: #fff !important;
+}
+#btn-export:hover {
+  background-color: #7d5c52 !important; /* Más oscuro para hover */
+  border-color: #7d5c52 !important;
+}
+
+/* Botón “Editar Sueldo Actual” */
+#edit-sueldo {
+  background-color: var(--secondary-color) !important;
+  border-color: var(--secondary-color) !important;
+  color: #fff !important;
+}
+#edit-sueldo:hover {
+  background-color: #7d5c52 !important;
+  border-color: #7d5c52 !important;
+}
