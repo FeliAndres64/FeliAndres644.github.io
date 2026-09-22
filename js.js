@@ -409,86 +409,121 @@ if (e.target.matches('.edit-account')) {
 // COPIAR ECONOMÍA PARA FELIOS
 // =====================================
 
-if (e.target.matches('#btn-copy-felios')) {
+function exportFeliosEconomia(){
 
 
-let text = "";
+let text="";
 
 
+text+=`[FELIOS_ECONOMIA_V1]\n\n`;
 
-text += `[FELIOS_ECONOMIA_V1]\n\n`;
-
-text += `tipo:economia\n`;
-
-text += `fecha:${new Date().toISOString().slice(0,10)}\n\n`;
-
+text+=`TIPO:economia\n`;
+text+=`FECHA:${new Date().toISOString().slice(0,10)}\n\n`;
 
 
 
 // CUENTAS
 
-text += `💰 CUENTAS\n\n`;
+text+=`====================\n`;
+text+=`CUENTAS\n`;
+text+=`====================\n\n`;
 
 
 accounts.forEach(acc=>{
 
 
-text += `${getEmojiCuenta(acc.name)} ${acc.name}\n`;
+text+=`CUENTA\n`;
 
-text += `saldo:${acc.balance}\n\n`;
+text+=`emoji:${getEmojiCuenta(acc.name)}\n`;
 
+text+=`nombre:${acc.name}\n`;
+
+text+=`saldo:${acc.balance}\n`;
+
+text+=`\n`;
 
 });
 
 
 
 
-// SUELDO
+// INGRESOS
 
-text += `📥 INGRESOS\n\n`;
-
-text += `💼 Sueldo\n`;
-
-text += `valor:${sueldoGanado}\n\n`;
+text+=`====================\n`;
+text+=`INGRESOS\n`;
+text+=`====================\n\n`;
 
 
+text+=`INGRESO\n`;
+text+=`nombre:Sueldo\n`;
+text+=`valor:${sueldoGanado}\n\n`;
 
 
 
-// BOLSILLOS
 
-text += `🎯 METAS Y BOLSILLOS\n\n`;
+// METAS
+
+text+=`====================\n`;
+text+=`METAS\n`;
+text+=`====================\n\n`;
+
 
 
 pockets.forEach(p=>{
 
 
-text += `${p.name}\n`;
+if(p.id===8)
+return;
 
-text += `acumulado:${p.total}\n`;
 
 
-if(p.desires && p.desires.length){
+text+=`META\n`;
+
+text+=`emoji:${p.name.substring(0,2)}\n`;
+
+text+=`categoria:${p.name}\n`;
+
+text+=`porcentaje:${p.pct*100}\n`;
+
+text+=`acumulado:${p.total}\n\n`;
+
 
 
 p.desires.forEach(d=>{
 
 
-text += `  🎯 ${d.motivo}\n`;
+text+=`OBJETIVO\n`;
 
-text += `  objetivo:${d.monto}\n`;
+text+=`nombre:${d.motivo}\n`;
+
+text+=`valor:${d.monto}\n`;
+
+text+=`estado:activo\n\n`;
+
+
+});
 
 
 });
 
 
-}
 
 
-text += "\n";
+// AHORRO
+
+const ahorro=pockets.find(p=>p.id===8);
 
 
-});
+text+=`====================\n`;
+
+text+=`AHORRO\n`;
+
+text+=`====================\n\n`;
+
+
+text+=`porcentaje:45\n`;
+
+text+=`acumulado:${ahorro.total}\n\n`;
 
 
 
@@ -496,32 +531,30 @@ text += "\n";
 
 // DEUDAS
 
-text += `🤝 DEUDAS\n\n`;
+
+text+=`====================\n`;
+
+text+=`DEUDAS\n`;
+
+text+=`====================\n\n`;
+
 
 
 debts.forEach(d=>{
 
 
-text += `👤 ${d.person}\n`;
+text+=`DEUDA\n`;
 
-text += `valor:${d.total}\n`;
+text+=`persona:${d.person}\n`;
 
-
-if(d.entries){
+text+=`valor:${d.total}\n`;
 
 
 d.entries.forEach(e=>{
 
-
-text += `motivo:${e.reason}\n`;
-
-text += `monto:${e.amount}\n`;
-
+text+=`motivo:${e.reason}\n`;
 
 });
-
-
-}
 
 
 text+="\n";
@@ -533,56 +566,43 @@ text+="\n";
 
 
 
-
 // CREDITOS
 
-text += `💳 ME DEBEN\n\n`;
+
+text+=`====================\n`;
+
+text+=`ME_DEBEN\n`;
+
+text+=`====================\n\n`;
 
 
 credits.forEach(c=>{
 
 
-text += `👤 ${c.person}\n`;
+text+=`CREDITO\n`;
 
-text += `valor:${c.total}\n\n`;
+text+=`persona:${c.person}\n`;
+
+text+=`valor:${c.total}\n\n`;
 
 
 });
 
 
 
-
-
-text += `[/FELIOS]`;
-
-
+text+=`[/FELIOS]`;
 
 
 
 navigator.clipboard.writeText(text)
 .then(()=>{
 
-
 showToast(
-"🧠 Economía copiada para FeliOS"
+"🧠 Economía exportada para FeliOS"
 );
-
-
-})
-.catch(()=>{
-
-
-showToast(
-"No se pudo copiar",
-"#c00"
-);
-
 
 });
 
-
-
-return;
 
 }
     // 5) Export / Import
