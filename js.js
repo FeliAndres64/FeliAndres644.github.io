@@ -265,7 +265,17 @@ function renderPockets() {
     // 1) Agregar Deuda / Crédito
     if (e.target.matches('#add-debt'))   return addEntry('debt');
     if (e.target.matches('#add-credit')) return addEntry('credit');
+  // ===============================
+  // COPIAR PARA FELIOS
+  // ===============================
 
+  if(e.target.matches('#btn-copy-felios')){
+
+      exportFeliosEconomia();
+
+      return;
+
+  }
     // 2) Editar cuenta
 // -----------------------------
 // Editar cuenta (incluye caso especial para Lulo)
