@@ -379,7 +379,186 @@ if (e.target.matches('.edit-account')) {
       });
       return;
     }
+// =====================================
+// COPIAR ECONOMÍA PARA FELIOS
+// =====================================
 
+if (e.target.matches('#btn-copy-felios')) {
+
+
+let text = "";
+
+
+
+text += `[FELIOS_ECONOMIA_V1]\n\n`;
+
+text += `tipo:economia\n`;
+
+text += `fecha:${new Date().toISOString().slice(0,10)}\n\n`;
+
+
+
+
+// CUENTAS
+
+text += `💰 CUENTAS\n\n`;
+
+
+accounts.forEach(acc=>{
+
+
+text += `${getEmojiCuenta(acc.name)} ${acc.name}\n`;
+
+text += `saldo:${acc.balance}\n\n`;
+
+
+});
+
+
+
+
+// SUELDO
+
+text += `📥 INGRESOS\n\n`;
+
+text += `💼 Sueldo\n`;
+
+text += `valor:${sueldoGanado}\n\n`;
+
+
+
+
+
+// BOLSILLOS
+
+text += `🎯 METAS Y BOLSILLOS\n\n`;
+
+
+pockets.forEach(p=>{
+
+
+text += `${p.name}\n`;
+
+text += `acumulado:${p.total}\n`;
+
+
+if(p.desires && p.desires.length){
+
+
+p.desires.forEach(d=>{
+
+
+text += `  🎯 ${d.motivo}\n`;
+
+text += `  objetivo:${d.monto}\n`;
+
+
+});
+
+
+}
+
+
+text += "\n";
+
+
+});
+
+
+
+
+
+// DEUDAS
+
+text += `🤝 DEUDAS\n\n`;
+
+
+debts.forEach(d=>{
+
+
+text += `👤 ${d.person}\n`;
+
+text += `valor:${d.total}\n`;
+
+
+if(d.entries){
+
+
+d.entries.forEach(e=>{
+
+
+text += `motivo:${e.reason}\n`;
+
+text += `monto:${e.amount}\n`;
+
+
+});
+
+
+}
+
+
+text+="\n";
+
+
+});
+
+
+
+
+
+
+// CREDITOS
+
+text += `💳 ME DEBEN\n\n`;
+
+
+credits.forEach(c=>{
+
+
+text += `👤 ${c.person}\n`;
+
+text += `valor:${c.total}\n\n`;
+
+
+});
+
+
+
+
+
+text += `[/FELIOS]`;
+
+
+
+
+
+navigator.clipboard.writeText(text)
+.then(()=>{
+
+
+showToast(
+"🧠 Economía copiada para FeliOS"
+);
+
+
+})
+.catch(()=>{
+
+
+showToast(
+"No se pudo copiar",
+"#c00"
+);
+
+
+});
+
+
+
+return;
+
+}
     // 5) Export / Import
     if (e.target.matches('#btn-export')) {
       const st = { accounts, debts, credits, history, pockets, sueldoGanado, lastContribution };
