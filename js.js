@@ -4,6 +4,32 @@
     currency: 'COP',
     minimumFractionDigits: 2
   });
+  function getEmojiCuenta(name){
+
+
+const n=name.toLowerCase();
+
+
+if(n.includes("físico"))
+return "💵";
+
+
+if(n.includes("nequi"))
+return "🟢";
+
+
+if(n.includes("lulo"))
+return "🍈";
+
+
+if(n.includes("bolsillo"))
+return "👜";
+
+
+return "💰";
+
+
+}
   const showToast = (t, bg = '#28a745') =>
     Toastify({ text: t, duration: 3000, style: { background: bg } }).showToast();
   const genId = arr => arr.length ? Math.max(...arr.map(o => o.id)) + 1 : 1;
